@@ -14,3 +14,9 @@ I logged in using the AWS free-tier root account I created earlier. Following [s
   5. Enable MFA for admin user
 
   ![Enable MFA for Admin user](assets/Enable-MFA-for-admin-user.png)
+  
+### Generate AWS Credential
+
+I added new AWS credential for use on this bootcamp
+
+  ![AWS Credential](assets/AWS-credential.png)

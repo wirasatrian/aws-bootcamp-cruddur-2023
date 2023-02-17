@@ -59,6 +59,27 @@ Make sure Gitpod remember the credential
 
 ![Relauch Gitpod Workspace](assets/Lauch-Gitpod-workspace.png)
 
+### Create a Billing Alarm
+
+I created 2 billing alarm :
+  1. **Using billing console**, click on Billing preferences -> tick on Receive Billing Alert, then save preference.
+     Click on Manage Billing alerts link, then follow [Chirag Nayyar explaination](https://www.youtube.com/watch?v=OVw3RrlP-sI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=14) to setup cloudwatch alarm. Here I set USD 20 as threshold value.
+  2. **Using AWS CLI**
+     First, make SNS Topic, then create subscription of the Topic. I set dan create Cloudwatch alarm using config file in JSON format.
+     Here I set USD 1 as a threshold value.
+     
+  It look like not match for threshold. Just for learning purpose LOL
+     
+  ![My Billing Alarm](assets/Billing-Alarm.png)
+  
+  
+ 
+  
+  
+  
+  
+  
+
 
 
  

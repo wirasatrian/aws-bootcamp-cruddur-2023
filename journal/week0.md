@@ -31,9 +31,35 @@ Refer to [AWS CLI User Guide](https://docs.aws.amazon.com/cli/latest/userguide/g
   ![Command Line to Install AWS CLI](assets/Install-AWS-CLI.png)
   
 AWS CLI installed succesfully !
+And then set Enviroment Variable below dan fill in using AWS admin credential i generate before.
+
+```
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+export AWS_DEFAULT_REGION=us-east-1
+```
 
   ![AWS CLI](assets/Proof-of-AWS-CLI-installed.png)
   
+After manually install succeed, I update .gitpod.yml file :
+  1.  To install the AWS CLI when our Gitpod enviroment launch
+  2.  Set AWS CLI to use partial autoprompt mode to make it easier to debug CLI commands
+  
+We'll tell Gitpod to remember the credentials whenever relaunch workspace
+
+```
+gp env AWS_ACCESS_KEY_ID=""
+gp env AWS_SECRET_ACCESS_KEY=""
+gp env AWS_DEFAULT_REGION=us-east-1
+```
+
+### Check that the AWS CLI is working whenever relaunch workspace
+
+Make sure Gitpod remember the credential
+
+![Relauch Gitpod Workspace](assets/Lauch-Gitpod-workspace.png)
+
+
 
  
 

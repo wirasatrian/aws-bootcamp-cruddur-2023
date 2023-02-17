@@ -73,7 +73,29 @@ I created 2 billing alarm :
   ![My Billing Alarm](assets/Billing-Alarm.png)
   
   
- 
+ ### Create an AWS Budget
+
+I created 2 budget :
+  1. **Using billing console**, click on Budget, then create budget.
+     I follow [Chirag Nayyar explaination](https://www.youtube.com/watch?v=OVw3RrlP-sI&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=14) to setup an AWS budget for USD 20
+  2. **Using AWS CLI**
+     Get AWS Account ID
+      ```sh
+      aws sts get-caller-identity --query Account --output text
+      ```
+     Update the JSON files with the AWS Account ID, then replace Account ID on script below before running this CLI command
+     
+      ```sh
+      aws budgets create-budget \
+          --account-id AccountID \
+          --budget file://aws/json/budget.json \
+          --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
+      ```
+      Below my AWS Budget overview
+      
+      ![My AWS Budget](assets/AWS-Budget.png)
+
+
   
   
   

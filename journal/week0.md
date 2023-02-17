@@ -20,3 +20,21 @@ I logged in using the AWS free-tier root account I created earlier. Following [s
 I added new AWS credential for use on this bootcamp
 
   ![AWS Credential](assets/AWS-credential.png)
+  
+
+### Install AWS CLI
+
+I installing AWS CLI on Gitpod. First, point to my repo on Github, then click the Gitpod button.
+Create new Terminal with bash prompt, go to the week-0 branch.
+Refer to [AWS CLI User Guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), I follow these steps from the command line to install the AWS CLI :
+
+  ![Command Line to Install AWS CLI](assets/Install-AWS-CLI.png)
+  
+AWS CLI installed succesfully !
+
+  ![AWS CLI](assets/Proof-of-AWS-CLI-installed.png)
+  
+
+ 
+
+

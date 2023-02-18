@@ -95,10 +95,16 @@ I created 2 budget :
       
       ![My AWS Budget](assets/AWS-Budget.png)
       
+### Conceptual Diagram on a Napkin
+
+  ![Napkin Design](assets/Logical-Diagram-on-a-Napkin.jpeg)
+      
 ### Cruddur Logical Architectural Diagram
     
 I never using Lucid chart before, so learning by doing and takes time.
 Here my diagram i created, need more time to add or replace momento icon :)
+
+[This is the share link](https://lucid.app/lucidchart/adfbdb9d-c56d-4af5-b158-6d9fea081d9a/edit?viewport_loc=-170%2C-1031%2C2208%2C1038%2C0_0&invitationId=inv_3025b78d-4ed4-45b5-ae8c-bef08bb8e7bb)
     
  ![My Cruddur Logical Diagram](assets/Cruddur-Logical-Diagram.png)
 

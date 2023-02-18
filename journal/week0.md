@@ -94,6 +94,13 @@ I created 2 budget :
       Below my AWS Budget overview
       
       ![My AWS Budget](assets/AWS-Budget.png)
+      
+    ### Cruddur Logical Architectural Diagram
+    
+    I never using Lucid chart before, so learning by doing and takes time.
+    Here my diagram i created, need more time to add or replace momento icon :)
+    
+      ![My Cruddur Logical Diagram](assets/Cruddur-Logical-Diagram.png)
 
 
   

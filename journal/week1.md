@@ -38,7 +38,7 @@ When succesfull, there will be json output on browser screen
 
 ### Build Docker Image
 
-The next step was build docker image from a Dockerfile, give it tag as backend-flask
+The next step was build docker image from a Dockerfile, give it backend-flask with default latest tag
 
 ```sh
   docker build -t backend-flask .
@@ -48,6 +48,10 @@ Check the resulting image by typing this command
 ```sh
   docker images
 ```
+![Create Docker Image](assets/week1/build-backend-flask-image.png)
+
+
+
 
 
 

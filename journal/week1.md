@@ -50,6 +50,72 @@ Check the resulting image by typing this command
 ```
 ![Create Docker Image](assets/week1/build-backend-flask-image.png)
 
+### Run Container
+
+Run container using image that was created before using these option :
+```
+  -p 5000:4567  => binding host port 5000 into container port 4567
+  -name         => name the container a given name
+  -d            => run container in background and print container ID (detach mode)
+```
+```sh
+  docker run -p 5000:4567 -d --name backend-flask backend-flask
+```
+Cek and list the running container by this command
+
+  ```sh
+    docker ps
+  ```
+  
+![Run Container](assets/week1/run-and-list-container.png)
+  
+Try to test the running container using curl :
+
+```
+  curl -X GET http://localhost:5000/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
+```
+
+Ooppss! Type Error on terminal screen. 
+
+![Type Error](assets/week1/type-error.png)
+
+
+Show the logs using docker logs command
+
+```
+  docker logs backend-flask
+```
+
+![Docker Logs](assets/week1/docker-logs.png)
+
+
+The environment variable seems not set yet. Try to debug using docker exec command and check the environment variables.
+
+```
+  docker exec -it backend-flask bash
+```
+![Docker Exec](assets/week1/docker-exec.png)
+
+
+Stop and remove the container, re-run the command with additional option -e to set enviroment variables 
+
+```sh
+  docker stop backend-flask
+  docker rm backend-flask
+  docker run -p 5000:4567 -d --name backend-flask -e FRONTEND_URL='*' -e BACKEND_URL='*'  backend-flask
+```
+Then test again. Success !
+
+![Re-run Container](assets/week1/re-run-container.png)
+
+
+
+  
+
+  
+  
+  
+
 
 
 

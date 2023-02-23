@@ -24,7 +24,7 @@ Then running an app on port 4567
 ```sh
   python3 -m flask run --host=0.0.0.0 --port=4567
 ```
-After running, click the PORT tab, click the address link whic port is 4567 and append this endpoint : /api/activities/home
+After running, click the PORT tab, click the address link which port is 4567 and append this endpoint : /api/activities/home
 
 When succesfull, there will be json output on browser screen
 
@@ -109,7 +109,60 @@ Then test again. Success !
 ![Re-run Container](assets/week1/re-run-container.png)
 
 
+## Containerize Frontend 
 
+### Create Dockerfile
+
+Change directory to frontend-react-js and create Dockerfile
+
+```
+  cd frontend-react-js
+  touch Dockerfile
+```
+
+![Create Dockerfile](assets/week1/Create-Dockerfile-Frontend.png)
+
+
+### Build Docker Image
+
+Build docker image from a Dockerfile, give it frontend-react-js with default latest tag
+
+```sh
+  docker build -t frontend-react-js .
+```
+
+![Create Docker Image](assets/week1/build-frontend-image.png)
+
+
+Check the resulting image by typing this command
+
+```sh
+  docker images
+```
+![Docker Images](assets/week1/Docker-images.png)
+
+
+### Run Container
+
+```sh
+  docker run -p 6000:3000 -d --name frontend-react-js frontend-react-js
+```
+Cek and list the running container by this command
+
+  ```sh
+    docker ps
+  ```
+![Run Container](assets/week1/run-fontend-container.png)
+
+
+Test the running frontend container, click the PORT tab on terminal, click the address link which port is 6000
+
+![Address Link](assets/week1/frontend-link.png)
+
+
+Output show on browser
+
+![Frontend](assets/week1/frontend-test.png)
   
 
   

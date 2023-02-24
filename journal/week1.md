@@ -163,6 +163,101 @@ Test the running frontend container, click the PORT tab on terminal, click the a
 Output show on browser
 
 ![Frontend](assets/week1/frontend-test.png)
+
+
+## Multiple Containers
+
+Here I would build and running backend and frontend containers using **docker-compose**
+
+### Run NPM Install
+
+We have to run **npm install** in order to downloads a package and it's dependencies before building the container
+
+```
+  cd frontend-react-js
+  npm install
+```
+
+### Create a docker-compose file
+
+Go back to the root directory of the project workspace from frontend-react-js directory, create docker-compose.yml
+
+```
+  cd ..
+  touch docker-compose.yml
+```
+As the the same with what i am doing before on the containerize Backend and Frontend, I binding the host port 5000 to backend container port 4567 and bind the host port 6000 to frontend container port 3000
+
+![docker-compose](assets/docker-compose.png)
+
+### Run docker-compose
+
+```
+  docker compose -f docker-compose.yml up
+```
+When successfull, backend container, frontend container and network was created
+
+![docker-compose-result1](assets/docker-compose-result1.png)
+
+
+Click on PORTS tab, URL Address and port would look like below :
+
+![docker-compose-result2](assets/docker-compose-result2.png)
+
+
+### Testing
+
+Click the frontend URL, the frontend page appear but seem the data from backend not load. 
+
+![console inspect](assets/test-not-success-yet.png)
+
+
+#### Inspecting 
+
+I inspect backend and frontend container to check if the environment variable are set correctly. 
+
+Click the docker tab on left side VSCode web, then right click backend container, click on inspect and check the port bindings and env list. I found they were set correctly.
+
+![inspect backend](assets/inspect-backend-container.png)
+
+
+Right click frontend container, click on inspect and check the port bindings and env list. I found they were set correctly.
+
+![inspect frontend](assets/inspect-frontend-container.png)
+
+
+Then I inspect the web page, and found CORS issue and a 401 Unauthorized error.
+
+![console inspect](assets/inspect-console.png)
+
+
+![network inspect](assets/inspect-network.png)
+
+
+After trying any references on the same issue on discord like change the origin into anywhere, insert @cross_origin() to any route on file app.py, etc ... **I resolve the issue by make the backend to be public**
+
+![public backend](assets/backend-to-be-public.png)
+
+After re-test, frontend and backend worked each other
+
+![Success](assets/test-success.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   
 
   

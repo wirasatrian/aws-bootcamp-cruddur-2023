@@ -263,11 +263,32 @@ I would add notifications endpoint on backend and notification page on frontend.
       
 #### Test Notification API Endpoint
 
-I build and running backend container, click the Backend URL addresss, append /api/activities/notification, enter or reload the page and got the result as expected.
+I build and running backend container, click the Backend URL addresss, append /api/activities/notifications, enter or reload the page and got the result as expected.
 
 ![Notification Api Endpoint Test](assets/week1/notifications-api-endpoint-test.png)
 
 
+
+### Frontend Notifications Page
+
+  1. I create Notification page with this steps :
+      - Go to frontend-react-js/src/pages directory
+      - Copy HomeFeedPage.js and rename to be NotificationPage.js
+      - Copy HomeFeedPage.css and rename to be NotificationPage.css
+      - edit NotificationPage.js, importing NotificationPage.css, change function name, change backend_url with API endpoint i created before, change title page
+
+      ![Notification Page](assets/week1/notification-pages.png)
+
+  2. I opened the app.js file, import NotificationPage and add route /notifications to NotificationPage
+
+      ![App.js File](assets/week1/edit-app-js.png)
+      
+      
+#### Test Notifications Page
+
+I am running docker compose, click the Frontend URL addresss, Login into Cruddur, and click Notifications on left side bar
+
+![Notification](assets/week1/notification-test-success.png)
 
 
 

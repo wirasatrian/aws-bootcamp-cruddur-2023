@@ -291,7 +291,7 @@ I am running docker compose, click the Frontend URL addresss, Login into Cruddur
 ![Notification](assets/week1/notification-test-success.png)
 
 
-## Deploy DynamoDB and Postgress Locally
+## Deploy DynamoDB and PostgreSQL Locally
 
 I added dynamoDB, Postgress and volume on docker-compose.yml file
 
@@ -357,6 +357,29 @@ I follow [this Example of using DynamoDB local](https://github.com/100DaysOfClou
 ```
 
 ![Get items](assets/week1/get-items-dynamodb-local.png)
+
+
+### Test PostgreSQL
+
+I add init configuration on file gitpod.yml to install postgress client whenever new Gitpod enviroment loaded and install postgeSQL client extention for vs code.
+
+![Install postgreSQL Client](assets/week1/install-postgreSQL-client.png)
+
+
+Login to postgreSQL using psql command on terminal
+
+```
+   psql -h localhost -Upostgres
+```
+
+I also test it using Database Explorer, create connection and connected successfully
+
+![Connection Test](assets/week1/postgres-test-success.png)
+
+
+
+
+
 
 
 

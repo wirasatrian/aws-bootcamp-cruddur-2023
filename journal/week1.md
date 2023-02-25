@@ -420,6 +420,29 @@ To push the image into docker hub :
   4. Check on the docker hub repositories, there are two repositories exist with contain 1 image each
 
       ![Docker Hub](assets/week1/hwc-docker-hub.png)
+      
+      
+### Deploy and Run Container using Docker on Local Computer
+
+The steps are :
+  1. I install docker on my windows PC following [Install Docker Desktop on Windows documentation](https://docs.docker.com/desktop/install/windows-install/)
+  2. I am using Visual Studio Code on my local computer as an IDE. Then I installed Docker and GitHub Pull Requests and Issues extentions in My VS Code
+  3. Login into my github account from vs code and clone the aws-bootcamp-cruddur-2023 repository
+  
+     ![Git Clone](assets/week1/hwc-git-clone.png)
+     
+  4. Run Docker Desktop and connect to it from vs code
+
+     ![Docker on VSC](assets/week1/hwc-docker-on-vsc.png)
+
+  6. Click docker-compose.yml file, then select compose up. The resulting container were started and up.
+
+     ![Compose Up](assets/week1/hwc-deploy-container-locally.png)
+     
+     
+     ![Docker Desktop](assets/week1/hwc-docker-desktop.png)
+
+
 
 
 

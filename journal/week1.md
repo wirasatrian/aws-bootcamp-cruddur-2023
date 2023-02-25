@@ -385,6 +385,71 @@ I also test it using Database Explorer, create connection and connected successf
 
 
 
+## Homework Challenges
+
+### Push and tag a image to DockerHub
+
+Requirements:
+  1. A docker hub account.
+  2. Installed docker software.
+  3. An image which you want to push to docker hub repository.
+
+I already have docker hub account and docker software installed on gitpod environment. I prepared the backend-flask image and frontect-react-js image as i do in the Containerize Backend and Frontend above.
+
+```
+  docker build -t backend-flask ./backend-flask
+  docker build -t frontend-react-js ./frontend-react-js
+  docker images
+```
+
+![Docker Images](assets/week1/hwc-docker-images.png)
+
+To push the image into docker hub :
+  1. Tag the local image into MY_DOCKERHUB_ACCOUNT_NAME/IMAGE_NAME:TAG. 
+
+      ![Docker Tag](assets/week1/hwc-docker-tag.png)
+
+  2. Login into docker hub using docker login command and input my docker hub user and password
+
+      ![Docker Login](assets/week1/hwc-docker-login.png)
+      
+  3. Push the new tag into docker hub using docker push command
+
+      ![Docker Login](assets/week1/hwc-docker-push.png)
+
+  4. Check on the docker hub repositories, there are two repositories exist with contain 1 image each
+
+      ![Docker Hub](assets/week1/hwc-docker-hub.png)
+      
+      
+### Deploy and Run Container using Docker on Local Computer
+
+The steps are :
+  1. I install docker on my windows PC following [Install Docker Desktop on Windows documentation](https://docs.docker.com/desktop/install/windows-install/)
+  2. I am using Visual Studio Code on my local computer as an IDE. Then I installed Docker and GitHub Pull Requests and Issues extentions in My VS Code
+  3. Login into my github account from vs code and clone the aws-bootcamp-cruddur-2023 repository
+  
+     ![Git Clone](assets/week1/hwc-git-clone.png)
+     
+  4. Run Docker Desktop and connect to it from vs code
+
+     ![Docker on VSC](assets/week1/hwc-docker-on-vsc.png)
+
+  6. Click docker-compose.yml file, then select compose up. The resulting container were started and up.
+
+     ![Compose Up](assets/week1/hwc-deploy-container-locally.png)
+     
+     
+     ![Docker Desktop](assets/week1/hwc-docker-desktop.png)
+
+
+
+
+
+
+
+
+
 
 
 

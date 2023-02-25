@@ -259,6 +259,16 @@ I would add notifications endpoint on backend and notification page on frontend.
      create API endpoint /api/activities/notifications to return the result
 
       ![Api Endpoint](assets/week1/notifications-api-endpoint.png)
+      
+      
+#### Test Notification API Endpoint
+
+I build and running backend container, click the Backend URL addresss, append /api/activities/notification, enter or reload the page and got the result as expected.
+
+![Notification Api Endpoint Test](assets/week1/notifications-api-endpoint-test.png)
+
+
+
 
 
 

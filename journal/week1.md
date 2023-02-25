@@ -268,6 +268,13 @@ I build and running backend container, click the Backend URL addresss, append /a
 ![Notification Api Endpoint Test](assets/week1/notifications-api-endpoint-test.png)
 
 
+#### Update OpenAPI Document for Notifications Endpoint
+
+I open openapi-3.0.yml file to add new path for /api/activities/notifications
+
+![OpenAPI Document Update](assets/week1/openapi-document-update.png)
+
+
 
 ### Frontend Notifications Page
 

@@ -8,6 +8,7 @@ import RecoverPage from './pages/RecoverPage';
 import MessageGroupsPage from './pages/MessageGroupsPage';
 import MessageGroupPage from './pages/MessageGroupPage';
 import ConfirmationPage from './pages/ConfirmationPage';
+import NotificationPage from './pages/NotificationPage';
 import React from 'react';
 import process from 'process';
 import {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeFeedPage />
+  },
+  {
+    path: "/notifications",
+    element: <NotificationPage />
   },
   {
     path: "/@:handle",

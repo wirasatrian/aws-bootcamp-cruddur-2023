@@ -4,7 +4,7 @@ class NotificationsActivities:
     now = datetime.now(timezone.utc).astimezone()
     results = [{
       'uuid': '69f126b0-1ceb-4a33-88be-d90fa7109eee',
-      'handle':  'Wira Satria',
+      'handle':  'wirasatrian',
       'message': 'I am bootcamper from Bali, Indonesia',
       'created_at': (now - timedelta(days=2)).isoformat(),
       'expires_at': (now + timedelta(days=5)).isoformat(),

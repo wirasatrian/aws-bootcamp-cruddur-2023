@@ -385,6 +385,48 @@ I also test it using Database Explorer, create connection and connected successf
 
 
 
+## Homework Challenges
+
+### Push and tag a image to DockerHub
+
+Requirements:
+  1. A docker hub account.
+  2. Installed docker software.
+  3. An image which you want to push to docker hub repository.
+
+I already have docker hub account and docker software installed on gitpod environment. I prepared the backend-flask image and frontect-react-js image as i do in the Containerize Backend and Frontend above.
+
+```
+  docker build -t backend-flask ./backend-flask
+  docker build -t frontend-react-js ./frontend-react-js
+  docker images
+```
+
+![Docker Images](assets/week1/hwc-docker-images.png)
+
+To push the image into docker hub :
+  1. Tag the local image into MY_DOCKERHUB_ACCOUNT_NAME/IMAGE_NAME:TAG. 
+
+      ![Docker Tag](assets/week1/hwc-docker-tag.png)
+
+  2. Login into docker hub using docker login command and input my docker hub user and password
+
+      ![Docker Login](assets/week1/hwc-docker-login.png)
+      
+  3. Push the new tag into docker hub using docker push command
+
+      ![Docker Login](assets/week1/hwc-docker-push.png)
+
+  4. Check on the docker hub repositories, there are two repositories exist with contain 1 image each
+
+      ![Docker Hub](assets/week1/hwc-docker-hub.png)
+
+
+
+
+
+
+
 
 
 

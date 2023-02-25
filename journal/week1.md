@@ -291,6 +291,95 @@ I am running docker compose, click the Frontend URL addresss, Login into Cruddur
 ![Notification](assets/week1/notification-test-success.png)
 
 
+## Deploy DynamoDB and Postgress Locally
+
+I added dynamoDB, Postgress and volume on docker-compose.yml file
+
+![docker-compose edit](assets/week1/docker-compose-edit.png)
+
+I running docker-compose via VS Code Menu, right click docker-compose.yml, then click compose up
+
+![compose up](assets/week1/compose-up.png)
+
+All containers are up !
+
+![All Containers](assets/week1/all-containers-are-up.png)
+
+
+### Test DynamoDB Local
+
+I follow [this Example of using DynamoDB local](https://github.com/100DaysOfCloud/challenge-dynamodb-local) and using AWS CLI to create table, item, list table and item.
+
+#### Create Table
+
+```
+  aws dynamodb create-table \
+      --endpoint-url http://localhost:8000 \
+      --table-name Music \
+      --attribute-definitions \
+          AttributeName=Artist,AttributeType=S \
+          AttributeName=SongTitle,AttributeType=S \
+      --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE \
+      --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+      --table-class STANDARD
+```
+
+![create tables](assets/week1/create-table-dynamodb-local.png)
+
+
+#### Show List of Tables created
+
+```
+  aws dynamodb list-tables --endpoint-url http://localhost:8000
+```
+
+![show tables](assets/week1/show-table-created.png)
+
+
+#### Create an Item
+
+```
+  aws dynamodb put-item \
+    --endpoint-url http://localhost:8000 \
+    --table-name Music \
+    --item \
+        '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}}' \
+    --return-consumed-capacity TOTAL  
+```
+
+![create item](assets/week1/create-item-dynamodb-local.png)
+
+
+#### Get and show the Items
+
+```
+  aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000
+```
+
+![Get items](assets/week1/get-items-dynamodb-local.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

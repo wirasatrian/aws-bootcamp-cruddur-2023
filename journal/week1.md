@@ -216,7 +216,7 @@ Click the frontend URL, the frontend page appear but seem the data from backend 
 
 I inspect backend and frontend container to check if the environment variable are set correctly. 
 
-Click the docker tab on left side VSCode web, then right click backend container, click on inspect and check the port bindings and env list. I found they were set correctly.
+I clicked the docker tab on left side VSCode web, then right click backend container, click on inspect and check the port bindings and env list. I found they were set correctly.
 
 ![inspect backend](assets/inspect-backend-container.png)
 
@@ -242,6 +242,23 @@ After re-test, frontend and backend worked each other
 
 ![Success](assets/test-success.png)
 
+
+
+
+## Notifications
+
+I would add notifications endpoint on backend and notification page on frontend.
+
+### Backend Notification Endpoint
+
+  1. Create function that return JSON list on NotificationsActivities class, save as notifications_activities.py inside services folder
+
+      ![Notification Class](assets/week1/notifications-activities-py.png)
+
+  2. Open app.py file on backend-flask folder, Import all module from services.notifications_activities and /
+     create API endpoint /api/activities/notifications to return the result
+
+      ![Api Endpoint](assets/week1/notifications-api-endpoint.png)
 
 
 

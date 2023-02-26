@@ -14,7 +14,14 @@ from services.create_message import *
 from services.show_activity import *
 from services.notifications_activities import *
 
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+import honeycomb_tracing
+
 app = Flask(__name__)
+
+# auto-instrument incoming requests
+FlaskInstrumentor().instrument_app(app)
+
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]

@@ -14,13 +14,40 @@ from services.create_message import *
 from services.show_activity import *
 from services.notifications_activities import *
 
+from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
-import honeycomb_tracing
+from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor, SimpleSpanProcessor, ConsoleSpanExporter
+
+# Initialize tracing and an exporter that can send data to Honeycomb
+provider = TracerProvider()
+
+processor = BatchSpanProcessor(OTLPSpanExporter())
+provider.add_span_processor(processor)
+
+# show on STDOUT
+simple_processor = SimpleSpanProcessor(ConsoleSpanExporter())
+provider.add_span_processor(simple_processor)
+
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer(__name__)
+
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 app = Flask(__name__)
 
-# auto-instrument incoming requests
+# Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()
+
+# instrument using X-Ray
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+# patch_all() // It will patch all the request to the application
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')

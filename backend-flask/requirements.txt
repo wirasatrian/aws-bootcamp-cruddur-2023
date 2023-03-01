@@ -10,3 +10,6 @@ opentelemetry-instrumentation-flask
 opentelemetry-instrumentation-requests
 opentelemetry.exporter.otlp.proto.grpc
 
+#X-Ray
+aws-xray-sdk
+

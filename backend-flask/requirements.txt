@@ -13,3 +13,6 @@ opentelemetry.exporter.otlp.proto.grpc
 #X-Ray
 aws-xray-sdk
 
+#Cloudwatch
+watchtower
+

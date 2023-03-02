@@ -9,6 +9,9 @@ services:
       OTEL_SERVICE_NAME: '${SERVICE_NAME}'
       AWS_XRAY_URL: '*127.0.0.1:5000*'
       AWS_XRAY_DAEMON_ADDRESS: 'xray-daemon:2000'
+      AWS_DEFAULT_REGION: '${AWS_REGION}'
+      AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
+      AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY}'
     build: ./backend-flask
     ports:
       - '5000:4567'

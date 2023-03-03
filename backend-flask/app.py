@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+from datetime import datetime
 
 from services.home_activities import *
 from services.user_activities import *
@@ -150,11 +151,23 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
+@xray_recorder.capture('all_user_activities')
 def data_home():
   data = HomeActivities.run(logger=LOGGER)
+
+  # xray subsegment
+  subsegment = xray_recorder.begin_subsegment('total_user_activities')    
+  dict = {
+    "now": datetime.now().isoformat(),
+    "total-users": len(data)
+  }
+  subsegment.put_metadata('key', dict, 'namespace')
+  xray_recorder.end_subsegment()
+
   return data, 200
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
+@xray_recorder.capture('user_activity')
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:

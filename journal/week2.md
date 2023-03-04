@@ -129,6 +129,130 @@ I tried to create a custom span and add custom attribute on **create message end
 
 
 
+## Observability using AWS X-Ray
+
+### Install AWS X-Ray SDK for Python 
+
+I add the following library to `requirements.txt` file:
+
+```
+aws-xray-sdk
+```
+
+Then I install those libraries and dependencies:
+
+```
+cd backend-flask
+pip install -r requirements.txt
+```
+
+Instrument backend flask application, by add codes below to the `app.py`
+
+```
+ffrom aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+```
+
+![X-ray Instrument Backend App](assets/week2/xray-instrument-backend-flask.png)
+
+
+### Edit docker-compose.yml
+
+Add X-ray daemon service 
+
+```
+  xray-daemon:
+    image: "amazon/aws-xray-daemon"
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_REGION: "${AWS_DEFAULT_REGIOND}""
+    command:
+      - "xray -o -b xray-daemon:2000"
+    ports:
+      - 2000:2000/udp
+```
+
+Add the following Environment Variables to `backend-flask` in 'docker-compose.yml' file
+
+```
+AWS_XRAY_URL: "*5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
+AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000
+```
+
+![X-ray Docker Compose](assets/week2/xray-docker-compose.png)
+
+
+### Setup AWS X-Ray Resources
+
+
+#### Create Sampling Rule
+
+Create `aws/json/xray.json` file and paste JSON below and save.
+
+```
+{
+  "SamplingRule": {
+      "RuleName": "Cruddur",
+      "ResourceARN": "*",
+      "Priority": 9000,
+      "FixedRate": 0.1,
+      "ReservoirSize": 5,
+      "ServiceName": "Cruddur",
+      "ServiceType": "*",
+      "Host": "*",
+      "HTTPMethod": "*",
+      "URLPath": "*",
+      "Version": 1
+  }
+}
+```
+
+Using aws cli command, create sampling rule using the JSON file created above.
+
+```
+aws xray create-sampling-rule --cli-input-json file://aws/json/xray.json
+```
+
+If success, the sampling rule will be created and i can see the result on terminal and the X-Ray console
+
+![X-ray Sampling rule CLI](assets/week2/xray-sampling-rule-cli.png)
+
+![X-ray Sampling Rule Console](assets/week2/xray-sampling-rule-console.png)
+
+
+#### Create Group
+
+```
+FLASK_ADDRESS="https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"$FLASK_ADDRESS\")"
+```
+
+If success, the group will be created and i can see the result on terminal and the X-Ray console
+
+![X-ray Sampling rule CLI](assets/week2/xray-create-group-cli.png)
+
+![X-ray Sampling Rule Console](assets/week2/xray-create-group-console.png)
+
+#### Install X-Ray daemon
+
+[Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
+
+```
+ wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
+ sudo dpkg -i **.deb
+ ```
+
+![Install X-Ray daemon](assets/week2/xray-install-xray-daemon.png)
+
+
+
 
 
 

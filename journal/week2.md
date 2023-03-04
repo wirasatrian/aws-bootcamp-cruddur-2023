@@ -16,6 +16,17 @@ In this week :
 
 ## Observability using Open Telemetry (OTEL) and Honeycomb
 
+### Create Honeycomb Account
+
+I follow [Gifted Lane Youtube Video](https://www.youtube.com/watch?v=7IwtVLfSD0o&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=10) to create [Honeycomb](honeycomb.io), look up the API KEY, then store and set the Honeycomb's API KEY on gitpod enviroment.
+
+```
+export HONEYCOMB_API_KEY=""
+export HONEYCOMB_SERVICE_NAME="Cruddur"
+gp env HONEYCOMB_API_KEY=""
+gp env HONEYCOMB_SERVICE_NAME="Cruddur"
+```
+
 ### Install Open Telemetry Python Libray
 
 I add the following library to `requirements.txt` file:
@@ -66,14 +77,7 @@ OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
 OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
 ```
 
-Store this variables on gitpod environment 
 
-```sh
-export HONEYCOMB_API_KEY=""
-export HONEYCOMB_SERVICE_NAME="Cruddur"
-gp env HONEYCOMB_API_KEY="XXXXXXXXXX"
-gp env HONEYCOMB_SERVICE_NAME="Cruddur"
-```
 
 
 

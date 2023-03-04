@@ -4,9 +4,9 @@ services:
     environment:
       FRONTEND_URL: "https://6000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       BACKEND_URL: "https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      OTEL_SERVICE_NAME: "backend-flask"
       OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
       OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
+      OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
     build: ./backend-flask
     ports:
       - "5000:4567"

@@ -44,19 +44,13 @@ import watchtower
 import logging
 from time import strftime
 
-#Rollbar
-import rollbar
-import rollbar.contrib.flask
-from flask import got_request_exception
-
 # Configuring Logger to Use CloudWatch
 LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
-cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur',stream_name='cruddur-stream')
 LOGGER.addHandler(console_handler)
 LOGGER.addHandler(cw_handler)
-LOGGER.info("on app.py")
 
 app = Flask(__name__)
 
@@ -70,22 +64,22 @@ xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 # patch_all() // It will patch all the request to the application
 
-rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
-@app.before_first_request
-def init_rollbar():
-    """init rollbar module"""
-    rollbar.init(
-        # access token
-        rollbar_access_token,
-        # environment name
-        'production',
-        # server root directory, makes tracebacks prettier
-        root=os.path.dirname(os.path.realpath(__file__)),
-        # flask already sets up logging
-        allow_logging_basic_config=False)
+# rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+# @app.before_first_request
+# def init_rollbar():
+#     """init rollbar module"""
+#     rollbar.init(
+#         # access token
+#         rollbar_access_token,
+#         # environment name
+#         'production',
+#         # server root directory, makes tracebacks prettier
+#         root=os.path.dirname(os.path.realpath(__file__)),
+#         # flask already sets up logging
+#         allow_logging_basic_config=False)
 
-    # send exceptions from `app` to rollbar, using flask's signal system.
-    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+#     # send exceptions from `app` to rollbar, using flask's signal system.
+#     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
@@ -151,23 +145,11 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
-@xray_recorder.capture('all_user_activities')
 def data_home():
   data = HomeActivities.run(logger=LOGGER)
-
-  # xray subsegment
-  subsegment = xray_recorder.begin_subsegment('total_user_activities')    
-  dict = {
-    "now": datetime.now().isoformat(),
-    "total-users": len(data)
-  }
-  subsegment.put_metadata('key', dict, 'namespace')
-  xray_recorder.end_subsegment()
-
   return data, 200
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
-@xray_recorder.capture('user_activity')
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:

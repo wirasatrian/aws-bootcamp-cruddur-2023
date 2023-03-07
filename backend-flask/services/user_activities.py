@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from aws_xray_sdk.core import xray_recorder
 class UserActivities:
   def run(user_handle):
     model = {
@@ -22,16 +21,4 @@ class UserActivities:
       }]
       model['data'] = results
 
-      # xray subsegment
-      subsegment = xray_recorder.begin_subsegment('user_activity_length_size')
-      
-      dict = {
-        "now": now.isoformat(),
-        "userid": model['data'][0]['handle'],
-        "message": model['data'][0]['message']
-      }
-
-      subsegment.put_metadata('key', dict, 'namespace')
-
-      xray_recorder.end_subsegment()
       return model

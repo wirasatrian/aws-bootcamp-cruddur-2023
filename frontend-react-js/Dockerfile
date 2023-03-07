@@ -4,9 +4,11 @@ ENV PORT=3000
 
 WORKDIR /frontend-react-js
 
-COPY . .
+COPY . ./
 
 RUN npm install
+
+COPY . .
 
 EXPOSE ${PORT}
 

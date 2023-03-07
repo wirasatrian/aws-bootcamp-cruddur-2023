@@ -170,7 +170,7 @@ Add X-ray daemon service
     environment:
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      AWS_REGION: "${AWS_DEFAULT_REGIOND}""
+      AWS_REGION: "${AWS_DEFAULT_REGION}""
     command:
       - "xray -o -b xray-daemon:2000"
     ports:
@@ -240,9 +240,7 @@ If success, the group will be created and i can see the result on terminal and t
 
 ![X-ray Sampling Rule Console](assets/week2/xray-create-group-console.png)
 
-#### Install X-Ray daemon
-
-[Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
+#### [Install X-ray Daemon](https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html)
 
 ```
  wget https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.deb
@@ -250,6 +248,35 @@ If success, the group will be created and i can see the result on terminal and t
  ```
 
 ![Install X-Ray daemon](assets/week2/xray-install-xray-daemon.png)
+
+
+### Run Application 
+
+I right click `docker-compose.yml` file, then select **Compose Up**. I ensure all service are running and make the service port to be public.  
+I do some click and operation on frontend, go to look at AWS X-Ray console and click on trace, then aws console will redirect to Cloudwatch -> X-Ray Traces -> Traces console.  
+Then I run Query to show the recent traces.
+
+![X-Ray Traces](assets/week2/xray-traces.png)
+
+Try to click on trace ID to look at trace detail page.
+
+![X-Ray Trace Detail](assets/week2/xray-trace-detail.png)
+
+
+### Instrument Subsegment
+
+I create subsegment instrumentation on **home endpoint** backend flask application, put annotation and metadata on that subsegment, query the trace and open up the trace detail and rawdata to ensure the subsegment was created successfully.
+
+![Subsegment Instrumentation](assets/week2/xray-subsegment-instrumentation.png)
+
+
+![X-Ray Subsegment](assets/week2/xray-subsegment.png)
+
+
+![X-Ray Subsegment Rawdata](assets/week2/xray-subsegment-rawdata.png)
+
+
+
 
 
 

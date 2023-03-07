@@ -276,6 +276,115 @@ I create subsegment instrumentation on **home endpoint** backend flask applicati
 ![X-Ray Subsegment Rawdata](assets/week2/xray-subsegment-rawdata.png)
 
 
+## Send Backend Application Logs to AWS Cloudwatch Log
+
+Now I learn how to send my application logs to AWS Cloudwatch log using **Watchtower**.  
+
+**Watchtower** is a third-party open-source tool for forwarding Docker container logs to Amazon CloudWatch Logs for centralized logging and analysis.  
+**Amazon CloudWatch Logs** is a managed service offered by Amazon Web Services (AWS) that allows you to monitor, store, and access log files from your Amazon EC2 instances, AWS CloudTrail, and other custom logs. It provides a centralized repository for log data from various sources, making it easy to analyze and troubleshoot issues.
+
+Watchtower and CloudWatch are complementary tools that can be used together to provide centralized logging and monitoring for Docker containers.
+
+
+### Installing `watchtower` Python library
+
+To use Watchtower with Python, I have to install watchtower Python library.  
+I add the following library to `requirements.txt` file:
+
+```
+watchtower
+```
+
+Then I install the libraries and dependencies using pip :
+
+```
+cd backend-flask
+pip install -r requirements.txt
+```
+
+### Edit `docker-compose.yml`
+
+Add the environment variables in your backend-flask 
+
+```
+  AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+```
+
+![AWS EnvVar](assets/week2/cw-envvars.png)
+
+
+### Instrument backend flask application
+
+Import the watchtower library and create a CloudWatchLogsHandler object with the desired log group by add codes below to the `app.py`
+
+```
+import watchtower
+import logging
+from time import strftime
+```
+
+```
+LOGGER = logging.getLogger(__name__)
+LOGGER.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur', stream_name='cruddur-stream')
+LOGGER.addHandler(console_handler)
+LOGGER.addHandler(cw_handler)
+```
+
+![Watchtower Instrumentation-1](assets/week2/watchtower-instrument-1.png)
+
+
+Use the logger object to write log messages:
+
+```
+@app.after_request
+def after_request(response):
+    timestamp = strftime('[%Y-%b-%d %H:%M]')
+    LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
+    return response
+```
+
+![Watchtower Instrumentation-2](assets/week2/watchtower-instrument-2.png)
+
+
+I try to log something in an `home` endpoint
+
+```
+LOGGER.info('Hello Cloudwatch! from /api/activities/home')
+```
+
+![Cloudwatch Logging](assets/week2/cw-logging.png)
+
+
+### Run Application 
+
+I right click `docker-compose.yml` file, then select **Compose Up**. I ensure all service are running and make the service port to be public.  
+I do some click and operation on frontend, then look at AWS Cloudwatch Log console.  
+Click on Log groups in the left, i see **cruddur** log group exist.  
+
+
+![Cruddur Log Groups](assets/week2/cw-log-groups.png)
+
+
+Click on cruddur log group, i see **cruddur-stream** log stream exist.
+
+
+![Cruddur Log Streams](assets/week2/cw-log-streams.png)
+
+
+Then i click cruddur stream to see log events generated.
+
+
+![Cruddur Log Events](assets/week2/cw-log-events.png)
+
+
+
+
+
+
 
 
 

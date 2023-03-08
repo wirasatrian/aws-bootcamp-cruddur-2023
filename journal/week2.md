@@ -483,6 +483,9 @@ Execute a test endpoint and see the result on rollbar cruddur project
 ![Rollbar Test](assets/week2/rb-test.png)
 
 
+![Rollbar Test Result](assets/week2/rb-test-result.png)
+
+
 
 
 

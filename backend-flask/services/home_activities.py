@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from opentelemetry import trace
+from aws_xray_sdk.core import xray_recorder
 
 tracer = trace.get_tracer("home.activities")
 
@@ -49,5 +50,24 @@ class HomeActivities:
         'replies': []
       }
       ]
+
+      # xray subsegment
+      subsegment = xray_recorder.begin_subsegment('user_activity_details')
+
+      subsegment.put_annotation('NumberOfActivities',len(results))
+
+      for result in results:
+        dict = {
+        "userid": result['handle'],
+        "message": result['message']
+        }
+
+        subsegment.put_metadata(result['uuid'], dict,'activities')
+
+      xray_recorder.end_subsegment()
+
       span.set_attribute("app.length", len(results))
+      
       return results
+  
+

@@ -15,6 +15,7 @@ from services.create_message import *
 from services.show_activity import *
 from services.notifications_activities import *
 
+#Honeycomb
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
@@ -59,6 +60,7 @@ LOGGER.addHandler(cw_handler)
 
 app = Flask(__name__)
 
+#Honeycomb
 # Initialize automatic instrumentation with Flask
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
@@ -187,7 +189,7 @@ def data_activities():
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
 def data_show_activity(activity_uuid):
-  data = ShowActivity.run(activity_uuid=activity_uuid)
+  data = ShowActivities.run(activity_uuid=activity_uuid)
   return data, 200
 
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST','OPTIONS'])

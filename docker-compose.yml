@@ -2,17 +2,17 @@ version: '3.8'
 services:
   backend-flask:
     environment:
-      FRONTEND_URL: "https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      BACKEND_URL: "https://6000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
-      OTEL_EXPORTER_OTLP_ENDPOINT: "https://api.honeycomb.io"
-      OTEL_EXPORTER_OTLP_HEADERS: "x-honeycomb-team=${HONEYCOMB_API_KEY}"
-      OTEL_SERVICE_NAME: "${HONEYCOMB_SERVICE_NAME}"
-      AWS_XRAY_URL: "*5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-      AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
-      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
-      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
-      ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
+      FRONTEND_URL: 'https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}'
+      BACKEND_URL: 'https://6000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}'
+      OTEL_EXPORTER_OTLP_ENDPOINT: 'https://api.honeycomb.io'
+      OTEL_EXPORTER_OTLP_HEADERS: 'x-honeycomb-team=${HONEYCOMB_API_KEY}'
+      OTEL_SERVICE_NAME: '${HONEYCOMB_SERVICE_NAME}'
+      AWS_XRAY_URL: '*5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*'
+      AWS_XRAY_DAEMON_ADDRESS: 'xray-daemon:2000'
+      AWS_DEFAULT_REGION: '${AWS_DEFAULT_REGION}'
+      AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
+      AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY}'
+      ROLLBAR_ACCESS_TOKEN: '${ROLLBAR_ACCESS_TOKEN}'
     build: ./backend-flask
     ports:
       - '5000:4567'
@@ -20,10 +20,9 @@ services:
       - ./backend-flask:/backend-flask
   frontend-react-js:
     environment:
-      REACT_APP_BACKEND_URL: "https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+      REACT_APP_BACKEND_URL: 'https://5000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}'
     build: ./frontend-react-js
     ports:
-      - '6000:3000'
       - '6000:3000'
     volumes:
       - ./frontend-react-js:/frontend-react-js
@@ -32,7 +31,6 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
       AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY}'
-      AWS_REGION: '${AWS_DEFAULT_REGION}'
       AWS_REGION: '${AWS_DEFAULT_REGION}'
     command:
       - 'xray -o -b xray-daemon:2000'

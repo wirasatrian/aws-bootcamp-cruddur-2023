@@ -381,6 +381,107 @@ Then i click cruddur stream to see log events generated.
 ![Cruddur Log Events](assets/week2/cw-log-events.png)
 
 
+## Error Monitoring and Debugging using Rollbar
+
+**Rollbar** is a cloud-based error monitoring and debugging platform designed for software developers and engineering teams. It allows developers to monitor and track errors, exceptions, and bugs in their applications in real-time, across multiple platforms and programming languages.
+
+Rollbar can be integrated with a wide range of popular programming languages, frameworks, and tools, including JavaScript, Ruby, Python, PHP, Java, .NET, and more. When an error occurs in an application, Rollbar captures detailed information about the error, including its root cause, the specific line of code where the error occurred, and contextual information such as the user's browser and operating system.
+
+Rollbar also provides a range of features to help developers track and manage errors more effectively, including automated error grouping, intelligent notifications, custom error alerts, and analytics and reporting tools. These features help developers identify and prioritize errors based on their severity and impact on the application, so they can quickly and efficiently fix bugs and improve the overall quality of their code.
+
+### Create Rollbar Account
+
+I follow [Gifted Lane Youtube Video]([https://www.youtube.com/watch?v=7IwtVLfSD0o&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=](https://www.youtube.com/watch?v=Lpm6oAP3Fb0&list=PLBfufR7vyJJ7k25byhRXJldB5AiwgNnWv&index=11) to create [Rollbar](rollbar.com) account using my github account.
+
+### Create Cruddur Project
+
+I login into my rollbar account, then create new project named **Cruddur**. Copy dan save rollbar token provided on the screen.
+
+![Create New Rollbar Project](assets/week2/rb-create-cruddur project.png)
+
+
+### Add the Flask SDK
+
+#### Installation
+
+To send errors to Rollbar from the Backend Flask application,  I add the rollbar package into `requirements.txt`
+
+```
+rollbar
+```
+
+Then I install the libraries and dependencies using pip :
+
+```
+    cd backend-flask
+    pip install -r requirements.txt
+```
+
+#### Store Environment Variable
+
+Execute this command to store and set the Rollbar's ACCESS TOKEN on gitpod. Change `xxxxxxxxxxxx` with the Rollbar ACCESS TOKEN.
+
+```
+    export ROLLBAR_ACCESS_TOKEN="xxxxxxxxxxxx"
+    gp env ROLLBAR_ACCESS_TOKEN="xxxxxxxxxxxx"
+```
+
+Add to backend-flask on `docker-compose.yml` file :
+
+```
+    ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
+```
+
+![Rollbar Access Token](assets/week2/rb-token-docker-compose.png)
+
+
+### Rollbar Instrumentation
+
+Import and initialize the rollbar package and initiate an exception handler on `app.py' file.
+
+```
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
+```
+
+```
+rollbar_access_token = os.getenv('ROLLBAR_ACCESS_TOKEN')
+@app.before_first_request
+def init_rollbar():
+    """init rollbar module"""
+    rollbar.init(
+        # access token
+        rollbar_access_token,
+        # environment name
+        'production',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+```
+
+I'll add an endpoint just for testing rollbar to `app.py`
+
+```
+@app.route('/rollbar/test')
+def rollbar_test():
+    rollbar.report_message('Hello World!', 'warning')
+    return "Hello World!"
+```
+
+![Rollbar Instrumentation](assets/week2/rb-instrumentation.png)
+
+
+### Run Application and Test an endpoint
+
+Execute a test endpoint and see the result on rollbar cruddur project
+
+![Rollbar Test](assets/week2/rb-test.png)
+
 
 
 

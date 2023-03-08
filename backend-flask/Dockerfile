@@ -12,8 +12,6 @@ COPY . .
 
 #Define and set environment variable 
 ENV FLASK_ENV=development
-ENV HONEYCOMB_API_KEY=OXEwnD58RZ27TugectCxTF
-ENV HONEYCOMB_SERVICE_NAME=Cruddur
 
 #expose the port
 EXPOSE ${PORT}

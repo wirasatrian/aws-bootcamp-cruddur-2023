@@ -20,4 +20,5 @@ class UserActivities:
         'expires_at': (now + timedelta(days=31)).isoformat()
       }]
       model['data'] = results
-    return model
+
+      return model

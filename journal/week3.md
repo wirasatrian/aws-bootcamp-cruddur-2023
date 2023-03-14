@@ -303,6 +303,40 @@ Do recovery, then will display below when success
 ![Recovery Success](assets/week3/reset-password-successfull.png)
 
 
+## Authorize user access using AWS Cognito
+
+When a user signs in, Cognito verifies the user's credentials and returns a JSON Web Token (JWT).  
+I will verify this token and use this to authorize access to /api/activities/home endpoint. 
+First, add token authorization as header on API endpoint call in `Homefeed.js` file.
+
+![Authorization Header](assets/week3/jwt-add-authorization-header.png)
+
+Import `cognito_jwt_token` library and configure with user pool id, client id and default region on `app.py` :
+
+```
+  from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
+```
+
+![Configure](assets/week3/jwt-configure.png)
+
+Then verify and authorize to access /api/activities/home endpoint
+
+![Verify and Authorize](assets/week3/jwt-verify-authorize-api-endpoint.png)
+
+This is the logs when hitting home endpoint without sign in
+
+![Unauthenticated](assets/week3/jwt-unauthenticated.png)
+
+This is the logs when hitting home endpoint after sign in successfull
+
+![Authenticated](assets/week3/jwt-authenticated.png)
+
+
+
+
+
+
+
 
 
 

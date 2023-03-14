@@ -4,26 +4,45 @@ import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Link } from "react-router-dom";
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
+import { Auth } from 'aws-amplify';
 
 export default function SigninPage() {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [errors, setErrors] = React.useState('');
+  // const [errors, setErrors] = React.useState('');
+  const [cognitoErrors, setCognitoErrors] = React.useState('');
 
   const onsubmit = async (event) => {
+    setCognitoErrors('')
     event.preventDefault();
-    setErrors('')
-    console.log('onsubmit')
-    if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
-      Cookies.set('user.logged_in', true)
-      window.location.href = "/"
-    } else {
-      setErrors("Email and password is incorrect or account doesn't exist")
-    }
-    return false
+    Auth.signIn(email, password)
+      .then(user => {
+        localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+        window.location.href = "/"
+      })
+      .catch(error => {
+        if (error.code == 'UserNotConfirmedException') {
+          window.location.href = "/confirm"
+        }
+        setCognitoErrors(error.message)
+      });
+      return false
   }
+
+  // const onsubmit = async (event) => {
+  //   event.preventDefault();
+  //   setErrors('')
+  //   console.log('onsubmit')
+  //   if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
+  //     Cookies.set('user.logged_in', true)
+  //     window.location.href = "/"
+  //   } else {
+  //     setErrors("Email and password is incorrect or account doesn't exist")
+  //   }
+  //   return false
+  // }
 
   const email_onchange = (event) => {
     setEmail(event.target.value);
@@ -32,10 +51,15 @@ export default function SigninPage() {
     setPassword(event.target.value);
   }
 
-  let el_errors;
-  if (errors){
-    el_errors = <div className='errors'>{errors}</div>;
+  let errors;
+  if (cognitoErrors){
+    errors = <div className='errors'>{cognitoErrors}</div>;
   }
+
+  // let el_errors;
+  // if (errors){
+  //   el_errors = <div className='errors'>{errors}</div>;
+  // }
 
   return (
     <article className="signin-article">
@@ -66,7 +90,8 @@ export default function SigninPage() {
               />
             </div>
           </div>
-          {el_errors}
+          {/* {el_errors} */}
+          {errors}
           <div className='submit'>
             <Link to="/forgot" className="forgot-link">Forgot Password?</Link>
             <button type='submit'>Sign In</button>
